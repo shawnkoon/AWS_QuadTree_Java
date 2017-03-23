@@ -123,7 +123,7 @@ public class QuadTreeGenerator {
 	/*
 	 * Creates DynamoDB table 
 	 */
-	private static void createTable() {
+	public static void createTable() {
 		try {
 
             // Create a table with a primary hash key named 'name', which holds a string
@@ -151,14 +151,17 @@ public class QuadTreeGenerator {
             System.out.println("AWS Error Code:   " + ase.getErrorCode());
             System.out.println("Error Type:       " + ase.getErrorType());
             System.out.println("Request ID:       " + ase.getRequestId());
+            System.exit(-1);
         } catch (AmazonClientException ace) {
             System.out.println("Caught an AmazonClientException, which means the client encountered "
                     + "a serious internal problem while trying to communicate with AWS, "
                     + "such as not being able to access the network.");
             System.out.println("Error Message: " + ace.getMessage());
+            System.exit(-1);
         } catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.exit(-1);
 		}
 	}
 	
@@ -216,13 +219,5 @@ public class QuadTreeGenerator {
 			// Right down
 			createTree((xMax - xMin)/2 + xMin, yMin, xMax, (yMax - yMin)/2 + yMin);
 		}
-	}
-	
-	public static void main(String[] args) {
-		init();
-		checkForExit();
-		createTable();
-		createTree(0,0,xAxis,yAxis);
-		System.out.println("Done");
 	}
 }
